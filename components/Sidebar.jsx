@@ -7,11 +7,11 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Hamburger button (always visible) */}
-      <button
-        className="fixed top-4 left-4 z-50 text-white p-2 bg-[#0B1C2C] rounded-md hover:bg-[#162A44] transition shadow-lg"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+     <button
+  className="fixed top-16 left-4 z-50 text-white p-2 bg-[#0B1C2C] rounded-md hover:bg-[#162A44] transition shadow-lg"
+  onClick={() => setIsOpen(!isOpen)}
+>
+
         <div className="space-y-1">
           <span className="block w-6 h-0.5 bg-white"></span>
           <span className="block w-6 h-0.5 bg-white"></span>

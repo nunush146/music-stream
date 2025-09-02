@@ -28,4 +28,3 @@ export const fetchArtistByName = (name) => api.get(`/artist/${encodeURIComponent
 // Albums
 export const fetchAlbums = () => api.get("/albums");
 export const fetchAlbumById = (id) => api.get(`/albums/${id}`);
-
