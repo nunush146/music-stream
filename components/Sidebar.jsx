@@ -7,11 +7,10 @@ export default function Sidebar() {
 
   return (
     <>
-     <button
-  className="fixed top-16 left-4 z-50 text-white p-2 bg-[#0B1C2C] rounded-md hover:bg-[#162A44] transition shadow-lg"
-  onClick={() => setIsOpen(!isOpen)}
->
-
+      <button
+        className="fixed top-16 left-4 z-50 text-white p-2 bg-[#0B1C2C] rounded-md hover:bg-[#162A44] transition shadow-lg"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <div className="space-y-1">
           <span className="block w-6 h-0.5 bg-white"></span>
           <span className="block w-6 h-0.5 bg-white"></span>
@@ -78,30 +77,9 @@ export default function Sidebar() {
             </Link>
           </li>
           <li>
-            <Link href="/search" onClick={() => setIsOpen(false)}>
-              <span className="hover:text-[#4DA6FF] cursor-pointer transition-colors flex items-center">
-                <span className="mr-3">🔍</span>Search
-              </span>
-            </Link>
-          </li>
-          <li>
             <Link href="/playlist" onClick={() => setIsOpen(false)}>
               <span className="hover:text-[#4DA6FF] cursor-pointer transition-colors flex items-center">
                 <span className="mr-3">📋</span>Playlist
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/favorites" onClick={() => setIsOpen(false)}>
-              <span className="hover:text-[#4DA6FF] cursor-pointer transition-colors flex items-center">
-                <span className="mr-3">❤️</span>Favorites
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/mostplayed" onClick={() => setIsOpen(false)}>
-              <span className="hover:text-[#4DA6FF] cursor-pointer transition-colors flex items-center">
-                <span className="mr-3">🎵</span>Most Played
               </span>
             </Link>
           </li>

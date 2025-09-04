@@ -2,15 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'https://music-streaming-api-seven.vercel.app/api/:path*'
-      }
-    ];
-  }
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/api/:path*',
+  //       destination: 'https://music-streaming-api-seven.vercel.app/api/:path*',
+  //     },
+  //   ];
+  // },
 };
 
 export default nextConfig;
-

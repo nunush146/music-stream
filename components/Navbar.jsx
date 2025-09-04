@@ -1,22 +1,15 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { 
-  FaHome, 
-  FaSearch, 
-  FaList, 
-  FaUser, 
-  FaMusic
-} from "react-icons/fa";
+import { FaHome, FaList, FaUser, FaMusic } from "react-icons/fa";
 
 export default function Navbar() {
   const [activeNav, setActiveNav] = useState('home');
 
   const navItems = [
     { id: 'home', href: '/', icon: FaHome, label: 'Home' },
-    { id: 'search', href: '/search', icon: FaSearch, label: 'Search' },
     { id: 'playlist', href: '/playlist', icon: FaList, label: 'Playlists' },
-    { id: 'login', href: '/login', icon: FaUser, label: 'Profile' },
+    { id: 'profile', href: '/login', icon: FaUser, label: 'Profile' },
   ];
 
   const handleNavClick = (navId) => {
@@ -25,18 +18,15 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Custom CSS for blue-themed colors and effects */}
+      {/* Global CSS for gradient logo, colors, hover effects */}
       <style jsx global>{`
         :root {
-          --app-black: #000000;
           --app-dark: #121212;
-          --app-gray: #181818;
-          --app-light-gray: #282828;
           --app-blue: #3b82f6;
           --app-text: #ffffff;
           --app-text-muted: #b3b3b3;
         }
-        
+
         .nav-link {
           transition: all 0.2s ease;
         }
@@ -73,7 +63,7 @@ export default function Navbar() {
             <h1 className="text-lg md:text-2xl font-bold logo-text">MusicStream</h1>
           </div>
 
-          {/* Navigation Links - Always Visible */}
+          {/* Navigation Links */}
           <div className="flex items-center space-x-2 md:space-x-8">
             {navItems.map((item) => {
               const IconComponent = item.icon;

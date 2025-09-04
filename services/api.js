@@ -1,30 +1,43 @@
 import axios from "axios";
 
+// Base Axios instance using env variable
 export const api = axios.create({
- baseURL: "/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL, // e.g., https://music-streaming-api-seven.vercel.app/api
 });
 
-// Existing helpers
-export const fetchSongs = () => api.get("/songs");
-export const fetchPlaylists = () => api.get("/playlists");
-export const loginUser = (data) => api.post("/login", data);
+// ===== Auth =====
+export const loginUser = (data) => api.post("/auth/login", data);
+export const signupUser = (data) => api.post("/auth/register", data);
 
+// ===== Artists =====
+export const fetchArtists = (searchTerm = "") =>
+  api.get(`/Artists${searchTerm ? `?artist=${encodeURIComponent(searchTerm)}` : ""}`);
 
-// Favorites
-export const fetchFavorites = () => api.get("/favorites");
-export const addFavorite = (songId) => api.post(`/favorites/${songId}`);
-export const removeFavorite = (songId) => api.delete(`/favorites/${songId}`);
+export const fetchArtistById = (artistId) => api.get(`/Artists/${artistId}`);
 
-// Play count
-export const updatePlayCount = (songId) => api.post(`/songs/${songId}/play`);
+export const fetchAlbumsByArtist = (artistId) =>
+  api.get(`/Artists/${artistId}/albums`);
 
-// Artists
-export const fetchArtists = () => api.get("/artists");
-export const fetchArtistByName = (name) => api.get(`/artist/${encodeURIComponent(name)}`);
+export const fetchTracksByAlbum = (artistId, albumId, trackSearch = "") =>
+  api.get(
+    `/Artists/${artistId}/${albumId}${trackSearch ? `?track=${encodeURIComponent(trackSearch)}` : ""}`
+  );
 
-// Albums
-export const fetchAlbums = () => api.get("/albums");
-export const fetchAlbumById = (id) => api.get(`/albums/${id}`);
+// ===== Discover / Genres =====
+export const fetchGenres = () => api.get("/Discover");
 
-// 🔹 Signup helper
-export const signupUser = (data) => api.post("/signup", data);
+export const fetchTracksByGenre = (genreId, trackSearch = "") =>
+  api.get(`/Discover/${genreId}${trackSearch ? `?track=${encodeURIComponent(trackSearch)}` : ""}`);
+
+// ===== MyPlaylist =====
+export const fetchPlaylists = () => api.get("/MyPlaylist");
+
+export const fetchPlaylistById = (playlistId, trackSearch = "") =>
+  api.get(`/MyPlaylist/${playlistId}${trackSearch ? `?track=${encodeURIComponent(trackSearch)}` : ""}`);
+
+export const createPlaylist = (data) => api.post("/MyPlaylist", data);
+
+// ===== Profile =====
+export const fetchProfile = () => api.get("/Profile");
+
+export const updateProfile = (data) => api.put("/Profile", data);
