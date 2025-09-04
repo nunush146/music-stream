@@ -9,8 +9,14 @@ export default function ArtistsPage() {
   useEffect(() => {
     const fetchArtists = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/artists"); // backend URL
+        const res = await fetch("/api/artists"); // ✅ now using rewrite
         const data = await res.json();
+
+        if (!res.ok) {
+          console.error("Failed to fetch artists:", data.message || res.status);
+          return;
+        }
+
         setArtists(data);
         setFiltered(data);
       } catch (err) {

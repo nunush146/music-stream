@@ -1,17 +1,14 @@
 import axios from "axios";
 
-// Base Axios instance
 export const api = axios.create({
-  baseURL: "http://localhost:5000/api", // your backend URL
+ baseURL: "/api",
 });
 
 // Existing helpers
 export const fetchSongs = () => api.get("/songs");
 export const fetchPlaylists = () => api.get("/playlists");
 export const loginUser = (data) => api.post("/login", data);
-export const registerUser = (data) => api.post("/register", data);
 
-// 🔹 New helpers you can add:
 
 // Favorites
 export const fetchFavorites = () => api.get("/favorites");
@@ -28,3 +25,6 @@ export const fetchArtistByName = (name) => api.get(`/artist/${encodeURIComponent
 // Albums
 export const fetchAlbums = () => api.get("/albums");
 export const fetchAlbumById = (id) => api.get(`/albums/${id}`);
+
+// 🔹 Signup helper
+export const signupUser = (data) => api.post("/signup", data);

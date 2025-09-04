@@ -9,7 +9,7 @@ export default function Player({ currentSong }) {
   useEffect(() => {
     if (currentSong) {
       axios
-        .post(`http://localhost:5000/api/songs/${currentSong.mid}/play`)
+        .post(`/api/songs/${currentSong.mid}/play`) // uses rewrite
         .catch((err) => console.error("Error updating play count:", err));
     }
   }, [currentSong]);
@@ -33,10 +33,8 @@ export default function Player({ currentSong }) {
       )}
       <AudioPlayer
         autoPlay={false}
-        src={currentSong.hosted_directory} // backend audio file
-        header={`${currentSong.title} - ${
-          currentSong.artist?.name || "Unknown Artist"
-        }`}
+        src={`/api/${currentSong.hosted_directory}`} // uses rewrite
+        header={`${currentSong.title} - ${currentSong.artist?.name || "Unknown Artist"}`}
         showSkipControls={true}
         showJumpControls={false}
         customAdditionalControls={[]}

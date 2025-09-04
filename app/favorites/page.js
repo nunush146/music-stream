@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import SongCard from "../../components/SongCard";
 import Player from "../../components/Player";
 import axios from "axios";
-import { FaHeart, FaMusic, FaPlay } from "react-icons/fa";
+import { FaHeart, FaPlay } from "react-icons/fa";
 
 export default function Favorites() {
   const [favorites, setFavorites] = useState([]);
@@ -14,7 +14,8 @@ export default function Favorites() {
     const fetchFavorites = async () => {
       setIsLoading(true);
       try {
-        const res = await axios.get("http://localhost:5000/api/favorites"); // backend endpoint
+        // ✅ Use relative URL instead of localhost
+        const res = await axios.get("/api/favorites");
         setFavorites(res.data);
       } catch (error) {
         console.error("Error fetching favorites:", error);
@@ -48,11 +49,12 @@ export default function Favorites() {
                   Your Favorite Songs
                 </h2>
                 <p className="text-gray-400 text-lg">
-                  {favorites.length} {favorites.length === 1 ? 'song' : 'songs'} you love
+                  {favorites.length}{" "}
+                  {favorites.length === 1 ? "song" : "songs"} you love
                 </p>
               </div>
             </div>
-            
+
             {/* Play All Button */}
             {!isLoading && favorites.length > 0 && (
               <div className="flex items-center space-x-4 mt-6">
@@ -78,14 +80,16 @@ export default function Favorites() {
           {/* Favorites Grid */}
           {!isLoading && favorites.length > 0 && (
             <div className="bg-black rounded-lg p-6 border border-gray-800">
-              <h3 className="text-xl font-semibold text-white mb-6">All Favorites</h3>
+              <h3 className="text-xl font-semibold text-white mb-6">
+                All Favorites
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {favorites.map((song) => (
-                  <div key={song.mid} className="transform hover:scale-105 transition-transform">
-                    <SongCard
-                      song={song}
-                      onClick={() => setCurrentSong(song)}
-                    />
+                  <div
+                    key={song.mid}
+                    className="transform hover:scale-105 transition-transform"
+                  >
+                    <SongCard song={song} onClick={() => setCurrentSong(song)} />
                   </div>
                 ))}
               </div>
@@ -98,19 +102,28 @@ export default function Favorites() {
               <div className="w-24 h-24 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
                 <FaHeart className="w-12 h-12 text-gray-600" />
               </div>
-              <h3 className="text-2xl font-semibold mb-2 text-gray-300">No favorites yet</h3>
-              <p className="text-gray-500 text-lg">Start liking songs to build your collection</p>
+              <h3 className="text-2xl font-semibold mb-2 text-gray-300">
+                No favorites yet
+              </h3>
+              <p className="text-gray-500 text-lg">
+                Start liking songs to build your collection
+              </p>
             </div>
           )}
 
           {/* Recently Added Favorites */}
           {!isLoading && favorites.length > 6 && (
             <div className="mt-12">
-              <h3 className="text-xl font-semibold text-white mb-6">Recently Added</h3>
+              <h3 className="text-xl font-semibold text-white mb-6">
+                Recently Added
+              </h3>
               <div className="bg-black rounded-lg p-6 border border-gray-800">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {favorites.slice(0, 6).map((song) => (
-                    <div key={song.mid} className="transform hover:scale-105 transition-transform">
+                    <div
+                      key={song.mid}
+                      className="transform hover:scale-105 transition-transform"
+                    >
                       <SongCard
                         song={song}
                         onClick={() => setCurrentSong(song)}
@@ -125,7 +138,9 @@ export default function Favorites() {
           {/* Quick Stats */}
           {!isLoading && favorites.length > 0 && (
             <div className="mt-8 bg-black rounded-lg border border-gray-800 p-6">
-              <h3 className="text-xl font-semibold text-white mb-4">Your Music Taste</h3>
+              <h3 className="text-xl font-semibold text-white mb-4">
+                Your Music Taste
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-blue-400">
@@ -135,7 +150,7 @@ export default function Favorites() {
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-blue-400">
-                    {[...new Set(favorites.map(song => song.artist))].length}
+                    {[...new Set(favorites.map((song) => song.artist))].length}
                   </div>
                   <div className="text-gray-400 text-sm">Artists</div>
                 </div>

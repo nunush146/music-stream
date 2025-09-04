@@ -12,10 +12,14 @@ export default function ArtistProfile() {
   useEffect(() => {
     const fetchArtist = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:5000/api/artist/${encodeURIComponent(name)}`
-        );
+        const res = await fetch(`/api/artist/${encodeURIComponent(name)}`);
         const data = await res.json();
+
+        if (!res.ok) {
+          console.error("Failed to fetch artist:", data.message || res.status);
+          return;
+        }
+
         setArtist(data.artist);
         setAlbums(data.albums);
       } catch (err) {

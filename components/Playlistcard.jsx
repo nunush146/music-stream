@@ -8,10 +8,11 @@ export default function PlaylistCard({ playlist, onClick }) {
       onClick={() => onClick && onClick(playlist)}
     >
       <img
-        src={playlist.cover || "/default-cover.jpg"} // fallback cover
-        alt={playlist.name}
-        className="rounded w-full h-40 object-cover"
-      />
+  src={playlist.cover ? `/api/${playlist.cover}` : "/default-cover.jpg"} // use rewrite if hosted on backend
+  alt={playlist.name}
+  className="rounded w-full h-40 object-cover"
+/>
+
       <h3 className="mt-2 text-white font-semibold">{playlist.name || "Untitled Playlist"}</h3>
       <p className="text-gray-400">{playlist.songs?.length || 0} songs</p>
     </div>

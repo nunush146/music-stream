@@ -9,39 +9,62 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Create custom success modal instead of alert
-    setTimeout(() => {
+
+    try {
+      // Send login request to backend
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, name })
+      });
+
+      const data = await res.json();
       setIsLoading(false);
-      const modal = document.createElement('div');
-      modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-      modal.innerHTML = `
+
+      if (!res.ok) {
+        // Show error modal
+        const errModal = document.createElement("div");
+        errModal.className = "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+        errModal.innerHTML = `
+          <div class="bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4 border border-gray-600">
+            <div class="text-center">
+              <h3 class="text-white text-lg font-bold mb-2">Login Failed</h3>
+              <p class="text-gray-400 mb-4">${data.message || "Unable to login."}</p>
+              <button class="px-6 py-2 bg-red-500 text-white rounded-lg" onclick="this.closest('.fixed').remove()">OK</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(errModal);
+        return;
+      }
+
+      // Success modal
+      const successModal = document.createElement("div");
+      successModal.className = "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50";
+      successModal.innerHTML = `
         <div class="bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4 border border-gray-600">
           <div class="text-center">
-            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </div>
             <h3 class="text-white text-lg font-bold mb-2">Welcome Back!</h3>
             <p class="text-gray-400 mb-4">Login successful for ${name}</p>
-            <button class="px-6 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded-lg transition" onclick="this.closest('.fixed').remove()">
-              Continue
-            </button>
+            <button class="px-6 py-2 bg-blue-500 text-white rounded-lg" onclick="this.closest('.fixed').remove()">Continue</button>
           </div>
         </div>
       `;
-      document.body.appendChild(modal);
-    }, 1000);
-    // Later: call backend API
+      document.body.appendChild(successModal);
+
+      console.log("Login success:", data);
+
+    } catch (err) {
+      setIsLoading(false);
+      console.error("Login error:", err);
+    }
   };
 
   return (
     <>
-      {/* Custom CSS for consistent dark theme */}
       <style jsx global>{`
         body {
           background-color: #121212;
@@ -123,14 +146,7 @@ export default function Login() {
                 disabled={isLoading}
                 className="w-full py-4 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 text-white rounded-lg font-semibold transition-all transform hover:scale-105 active:scale-95 shadow-lg"
               >
-                {isLoading ? (
-                  <div className="flex items-center justify-center space-x-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>Signing in...</span>
-                  </div>
-                ) : (
-                  'Sign In'
-                )}
+                {isLoading ? "Signing in..." : "Sign In"}
               </button>
             </form>
 
